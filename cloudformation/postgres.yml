@@ -1,0 +1,21 @@
+Parameters:
+  pDbName:
+    Type: String
+  pDbUser:
+    Type: String
+  pDbPass:
+    Type: String
+    Description: "< 8 characters"
+
+Resources:
+  testDb:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBName: !Ref pDbName
+      AllocatedStorage: '20'
+      DBInstanceClass: db.t2.small
+      StorageType: gp2
+      Engine: postgres
+      MasterUsername: !Ref pDbUser
+      MasterUserPassword: !Ref pDbPass
+      DBInstanceIdentifier: !Join ["-", [!Ref pDbName, !Ref "AWS::Region"]]
