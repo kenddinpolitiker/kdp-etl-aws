@@ -20,5 +20,5 @@ jobs:
 
       - name: validate_templates
         run: |
-          aws cloudformation validate-template --template-body cloudformation/postgres.yml
-          aws cloudformation validate-template --template-body cloudformation/vpc.yml
+          aws cloudformation validate-template --template-body file://cloudformation/postgres.yml
+          aws cloudformation validate-template --template-body file://cloudformation/vpc.yml
