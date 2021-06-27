@@ -1,11 +1,10 @@
 Parameters:
   pDbName:
     Type: String
-  pDbUser:
+    Default: testdb
+  dbSecretName:
     Type: String
-  pDbPass:
-    Type: String
-    Description: "< 8 characters"
+    Default: testdb_testsecret
 
 Resources:
   testDb:
@@ -16,6 +15,6 @@ Resources:
       DBInstanceClass: db.t2.small
       StorageType: gp2
       Engine: postgres
-      MasterUsername: !Ref pDbUser
-      MasterUserPassword: !Ref pDbPass
+      MasterUsername: !Join ['', ['{{resolve:secretsmanager:', !Ref dbSecretName, ':SecretString:username}}' ]]
+      MasterUserPassword: !Join ['', ['{{resolve:secretsmanager:', !Ref dbSecretName, ':SecretString:password}}' ]]
       DBInstanceIdentifier: !Join ["-", [!Ref pDbName, !Ref "AWS::Region"]]
