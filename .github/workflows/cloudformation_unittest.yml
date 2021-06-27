@@ -11,6 +11,8 @@ on:
 jobs:
   aws_validation:
     runs-on: ubuntu-latest
+    env:
+      working-directory: '.'
     steps:
 
       - name: install_aws
@@ -20,5 +22,7 @@ jobs:
 
       - name: validate_templates
         run: |
+          pwd
+          ls
           aws cloudformation validate-template --template-body file://cloudformation/postgres.yml
           aws cloudformation validate-template --template-body file://cloudformation/vpc.yml
