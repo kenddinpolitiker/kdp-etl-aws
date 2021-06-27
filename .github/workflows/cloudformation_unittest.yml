@@ -1,0 +1,36 @@
+name: develop_unittest
+
+env:
+  SERVER: dev  # Not used yet
+
+on:
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  aws_validation:
+    runs-on: ubuntu-latest
+    env:
+      working-directory: '.'
+    steps:
+
+      - name: install_aws
+        run: | 
+          sudo apt-get update
+          sudo apt-get -y install awscli
+
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: ls
+        run: ls
+
+      - name: ls2
+        run: ls ..
+
+      - name: validate_templates
+        run: |
+          pwd
+          aws cloudformation validate-template --template-body file://cloudformation/postgres.yml
+          aws cloudformation validate-template --template-body file://cloudformation/vpc.yml
