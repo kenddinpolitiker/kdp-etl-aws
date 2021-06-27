@@ -20,9 +20,14 @@ jobs:
           sudo apt-get update
           sudo apt-get -y install awscli
 
+      - name: ls
+        run: ls
+
+      - name: ls2
+        run: ls ..
+
       - name: validate_templates
         run: |
           pwd
-          ls
           aws cloudformation validate-template --template-body file://cloudformation/postgres.yml
           aws cloudformation validate-template --template-body file://cloudformation/vpc.yml
